@@ -3,13 +3,13 @@ body{
 	margin: 20px;
 	background-image: url("../images/liberityWomen.jpg")
 }
-header{
+h1{
 	text-align: center;
 	margin: 0px;
 	color: white;
 	font-size: 32px;
 }
-.button{
+.startButton{
 	background-color: white;
 	/*background-image: url("assets/images/flag.jpg")*/
 	width: 80%;
