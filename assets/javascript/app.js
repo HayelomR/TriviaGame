@@ -1,65 +1,55 @@
 
-//var trivTime = 0; this will be the amount of time allowed for each question
+var trivTime = 0; //this will be the amount of time allowed for each question
 var rightAnswer = 0;//this counts the number of right answers.
 var wrongAnswer = 0;//this counts the number of wrong answers
 var questionCounter = 1;// this counts the number of questions.
-//var timer = ''; this will be the timer that will be shown for each question.
+//var timer = ''; //this will be the timer that will be shown for each question.
 // lets create an object so that we can access questions and answers pull our questions.
 var questions = {
-			1:{
-				question:"What ocean is on the West Coast of the United States?",
-				answers:["Atlantic","Southern","Arctic","Pacific"],
-				correct: "Pacific",
-				right: "Correct!",
-				wrong: "Wrong!",
+	1:{
+		question:"What ocean is on the West Coast of the United States?",
+		choices:["Atlantic","Southern","Arctic","Pacific"],
+		correct: "Pacific",
 
-			   },
+	},
 
-			2:{
-				question:"What do we show loyalty to when we say the Pledge of Allegiance?",
-				answers:["The President","USA","State","Congress"],
-				correct:"USA",
-				right: "Correct!",
-				wrong: "Wrong!",
-	
-			},
-			3:{
-				question:"Before he was President, Eisenhower was a general. What war was he in?",
-				answers:["Vietnam War","Civil War","World War II","Spanish-American War"],
-				correct:"World War II",
-				right: "Correct!",
-				wrong: "Wrong!",
+	2:{
+		question:"What do we show loyalty to when we say the Pledge of Allegiance?",
+		choices:["The President","USA","State","Congress"],
+		correct:"USA",
+	},
+	3:{
+		question:"Before he was President, Eisenhower was a general. What war was he in?",
+		choices:["Vietnam War","Civil War","World War II","Spanish-American War"],
+		correct:"World War II",
+	},
+
+	4:{
+		question:"We elect a President for how many years?",
+		choices:["Four","Eight","Six","Two"],
+		correct:"Four",
+	},
+
+	5:{
+		question:"Name one problem that led to the Civil War.",
+		choices:["Sugar","Slavery","West ward expansion","Oil","none of the above"],
+		correct:"none of the above",
 		
-			},
+	},
 
-			4:{
-				question:"We elect a President for how many years?",
-				answers:["Four","Eight","Six","Two"],
-				correct:"Four",
-				right: "Correct!",
-				wrong: "Wrong!",
-			},
-			
-			5:{
-				question:"Name one problem that led to the Civil War.",
-				answers:["Sugar","Slavery","West ward expansion","Oil","none of the above"],
-				correct:"none of the above",
-				right: "Correct!",
-				wrong: "Wrong!",
-			},
-
-	};
+};
 //lets start the game //When buttons is clicked the first screen will be cleared and the second will come
-function start(){
+function initalizeGame(){
 	$(".startBtn").on("click",function(){
 		
 		$(".gamePage").html("");// clears the second screen and make it ready
 		// this is the same as $(".gamePage").empty();
+		timer();
 		createQuestions();
 	});
 }
-
- function createQuestions(){
+//lets create questions from the above object
+function createQuestions(){
 	//timerStart();
 	//Get question
 	var question = questions[questionCounter]["question"];
@@ -73,15 +63,16 @@ function start(){
 	$(".gamePage").append(newDiv);
 	createAnswers();
 }
- function createAnswers(){
-	var answerLength = questions[questionCounter]["answers"].length;
+
+function createAnswers(){
+	var answerLength = questions[questionCounter]["choices"].length;
 	for(var i = 0; i < answerLength;i++){
 		//get answers
-		var answers = questions[questionCounter]["answers"][i];
+		var answers = questions[questionCounter]["choices"][i];
 		//Create new div to hold answers
 		var newBtn = $("<button>");
-				//Add class to new Div"
-		newBtn.addClass("answers");
+		//Add class to new Div"
+		newBtn.addClass("choices");
 		//Give buttons attribute
 		newBtn.attr("data-type",answers);
 		//add text to new Div
@@ -89,16 +80,18 @@ function start(){
 		//Add answers to DOM
 		$(".gamePage").append(newBtn);
 	}
+	timer();
 	//Prevents click event from being saved
-	$(document).off("click",".answers",checkAnswer);
-	$(document).on("click",".answers",checkAnswer);
+	$(document).off("click",".choices",checkAnswer);
+	$(document).on("click",".choices",checkAnswer);
 }
- function checkAnswer(){
+
+function checkAnswer(){
 	 //Get users answer choice
-	var userAnswer = $(this).data("type");
-	var correctAnswer = questions[questionCounter]["correct"];
-	var right = questions[questionCounter]["right"];
-	var wrong = questions[questionCounter]["wrong"];
+	 var userAnswer = $(this).data("type");
+	 var correctAnswer = questions[questionCounter]["correct"];
+	 var right = questions[questionCounter]["right"];
+	 var wrong = questions[questionCounter]["wrong"];
 	//console.log(qACount);
 	if(userAnswer === correctAnswer){
 		//Update rightCount
@@ -113,6 +106,7 @@ function start(){
 		newDiv.text(right);
 		//Add answer to DOM
 		$(".gamePage").append(newDiv);
+		timer();
 		//Stops Time
 		//clearInterval(timer)
 		//Add 1 to question count to move to the next question
@@ -146,11 +140,7 @@ function start(){
 	}
 	else{
 		wrongAnswer++;
-		//Clears out triv Section
 		$(".gamePage").empty();
-		// var newImg = $('<img>');
-		// newImg.attr('src',correctImg);
-		// $('.trivSection').append(newImg);
 		var newDiv = $("<div>");
 		//Give div class
 		newDiv.addClass("incorrectAnswer");
@@ -165,21 +155,20 @@ function start(){
 		
 		if(questionCounter <= 5){
 			setTimeout(function(){
-			$(".gamePage").empty();
-			createQuestions();
-			},500);
+				$(".gamePage").empty();
+				createQuestions();
+			},5000);
 		}
 		else{
 			//Clears out triv Section
 			$(".gamePage").empty();
-		// 	var newImg = $('<img>');
-		// newImg.attr('src',correctImg);
-		// $('.trivSection').append(newImg);
-			var newDiv = $("<div>");
+		
+
+		var newDiv = $("<div>");
 			//Give div class
 			newDiv.addClass("incorrectAnswer");
 			//adds Wrong! text to div
-			newDiv.text(wrong);
+			//newDiv.text(wrong);
 			//Add answer to DOM
 			$(".gamePage").append(newDiv);
 			//Stops Time
@@ -189,38 +178,23 @@ function start(){
 		}
 	}
 }
-// //Timer
-// //==========================================
-// var timerStart = function(){ 
-// 	$('.timerSection').empty();
-// 	//Sets time to 10
-// 	trivTime = 100;
-// 	//Progress Bar
-// 	var timeTag = $('<div>');
-// 	timeTag.addClass('time');
-// 	timeTag.addClass('progress');
-// 	var progressBar = $('<div>');
-// 	progressBar.addClass('progress-bar');
-// 	progressBar.width(trivTime + '%');
 
-// 	$('.timerSection').append(timeTag);
-// 	$('.time').append(progressBar);	
-// 	//Decrements Time
-// 	timer = setInterval(timeDecrement,100);
-// }
-// var timeDecrement = function(){ 
-// 	//Progress bar decrement
-// 	$('.progress-bar').width(trivTime + '%');
-// 	trivTime--;
-// 	//if time gets to 0
-// 	if(trivTime === -10){
-// 		userAnswer = false;
-// 		//Clears Time
-// 		clearInterval(timer);
-// 		checkAnswer();
-// 	}
-	
-// }
+function timer() {
+	 
+		if (questionCounter === 0) {
+			timer++
+			$(".timer").html();
+			
+		}
+		if (questionCounter > 0) {
+			timer--;
+		}
+		$(".timer").html();
+	}
+
+
+
+
 var gameOver = function(){
 	//Remove everything in gamePage section
 	$(".gamePage").empty();
@@ -238,6 +212,8 @@ var gameOver = function(){
 	newDiv.text("Game Over! click Reset to play again?");
 	//Append game over text to DOM
 	$(".gamePage").append(newDiv);
+
+
 	//Create ResetButton
 	var newBtn = $("<button>");
 	//Give btn Class
@@ -246,11 +222,12 @@ var gameOver = function(){
 	newBtn.text("Reset");
 	//Append
 	$(".gamePage").append(newBtn);
-	//Reset all value
+
 	//trivTime = 100;
 	questionCounter = 1;
 	rightAnswer = 0;
 	wrongAnswer = 0;
+
 	//When reset button is clicked.......
 	$(".resetBtn").on("click",function(){
 		$(".gamePage").empty()
@@ -259,4 +236,4 @@ var gameOver = function(){
 	});
 }
 
-start();
+initalizeGame(); //===> starts the game.
