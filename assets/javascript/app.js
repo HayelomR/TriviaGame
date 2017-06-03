@@ -3,7 +3,7 @@ var rightAnswer = 0;//this counts the number of right answers.
 var wrongAnswer = 0;//this counts the number of wrong answers
 var questionCounter = 1;// this counts the number of questions. it starts from one because it is an object
 var numberTimes
-var timer = ''; //this will be the timer that will be shown for each question.
+var timer = ""; //this will be the timer that will be shown for each question.
 // lets create an object so that we can access questions and answers pull our questions.
 var questions = {
 			1:{
@@ -41,27 +41,32 @@ var questions = {
 //lets start the game //When buttons is clicked the first screen will be cleared and the second will come
 function initalizeGame(){
 	$(".startBtn").on("click",function(){
-		everyOneSecond();
+	everyOneSecond();
 		$(".gamePage").html("");// clears the second screen and make it ready
 		// this is the same as $(".gamePage").empty();
 		createQuestions();
 		setInterval(everyOneSecond,500);
 	});
 }
-var counter = 50;// number that will be counted
-// starts a timer when a question is displayed
-function everyOneSecond() {
-	counter --
-	$(".timer").html("Remaining Time: " + counter);
-	if(counter <= 1){
-		counter = false;
-		questionCounter ++
-		//$(".timer").html("Remaining Time: " + count);
-	};
+
+var counter = 5;
+var timerId = setInterval(everyOneSecond, 500);
+function everyOneSecond(){
+	if (counter === 0) {
+		$(".timer").html(counter);
+		$(".gamePage").text("ohh time is up");
+		//clearTimeout(timerId);
+
+	} else {
+
+	$(".timer").html(counter);
+	counter--;
+	}
+
 }
 
  function createQuestions(){
-	//startTimer();
+	//everyOneSecond();
 	//Get question
 	var question = questions[questionCounter]["question"];
 	//assign div element to newDiv
