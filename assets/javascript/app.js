@@ -53,7 +53,7 @@ var counter = 5;
 var timerId = setInterval(everyOneSecond, 500);
 function everyOneSecond(){
 	if (counter === 0) {
-		$(".timer").html(counter);
+		$(".timer").html("Remaining Time: " + counter);
 		$(".gamePage").text("ohh time is up");
 		//clearTimeout(timerId);
 
