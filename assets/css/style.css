@@ -37,3 +37,19 @@ h1{
 
 
 }
+.timer{
+	font-size: 40px;
+	color: white;
+	margin-left: 100px;
+}
+.resetBtn{
+	color: green;
+	font-size: 48px;
+	margin: 10px;
+
+}
+.choices{
+	color: green;
+	font-size: 24px;
+	margin: 10px;
+}

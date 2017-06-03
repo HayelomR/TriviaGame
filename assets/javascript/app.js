@@ -2,7 +2,8 @@
 var rightAnswer = 0;//this counts the number of right answers.
 var wrongAnswer = 0;//this counts the number of wrong answers
 var questionCounter = 1;// this counts the number of questions. it starts from one because it is an object
-//var timer = ''; //this will be the timer that will be shown for each question.
+var numberTimes
+var timer = ''; //this will be the timer that will be shown for each question.
 // lets create an object so that we can access questions and answers pull our questions.
 var questions = {
 			1:{
@@ -40,15 +41,27 @@ var questions = {
 //lets start the game //When buttons is clicked the first screen will be cleared and the second will come
 function initalizeGame(){
 	$(".startBtn").on("click",function(){
-		
+		everyOneSecond();
 		$(".gamePage").html("");// clears the second screen and make it ready
 		// this is the same as $(".gamePage").empty();
 		createQuestions();
+		setInterval(everyOneSecond,500);
 	});
+}
+var counter = 50;// number that will be counted
+// starts a timer when a question is displayed
+function everyOneSecond() {
+	counter --
+	$(".timer").html("Remaining Time: " + counter);
+	if(counter <= 1){
+		counter = false;
+		questionCounter ++
+		//$(".timer").html("Remaining Time: " + count);
+	};
 }
 
  function createQuestions(){
-	//timerStart();
+	//startTimer();
 	//Get question
 	var question = questions[questionCounter]["question"];
 	//assign div element to newDiv
@@ -103,8 +116,8 @@ function initalizeGame(){
 		newDiv.text(right);
 		//Add answer to DOM
 		$(".gamePage").append(newDiv);
-		//Stops Time
-		//clearInterval(timer)
+		
+		clearInterval(timer)
 		//Add 1 to question count to move to the next question
 		questionCounter++;
 		if(questionCounter <= 5){
@@ -138,9 +151,6 @@ function initalizeGame(){
 		wrongAnswer++;
 		//Clears out triv Section
 		$(".gamePage").empty();
-		// var newImg = $('<img>');
-		// newImg.attr('src',correctImg);
-		// $('.trivSection').append(newImg);
 		var newDiv = $("<div>");
 		//Give div class
 		newDiv.addClass("incorrectAnswer");
