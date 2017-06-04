@@ -1,8 +1,7 @@
-
+// ======= variables that will be used ======
 var rightAnswer = 0;//this counts the number of right answers.
 var wrongAnswer = 0;//this counts the number of wrong answers
 var questionCounter = 1;// this counts the number of questions. it starts from one because it is an object
-var numberTimes
 var timer = ""; //this will be the timer that will be shown for each question.
 // lets create an object so that we can access questions and answers pull our questions.
 var questions = {
@@ -54,8 +53,8 @@ var counter = 50;
 function everyOneSecond(){
 	if (counter === 0) {
 		$(".timer").html("Remaining Time: " + counter);
-		$(".gamePage").text("ohh time is up");
-		//clearTimeout(timerId);
+		$(".gamePage").html("ohh time is up " + "<br>" + "Correct: " + rightAnswer + "<br>" + "Wrong: " + wrongAnswer);
+	
 
 	} else {
 
@@ -64,10 +63,8 @@ function everyOneSecond(){
 	}
 
 }
-
+// ======= lets create questions =======
  function createQuestions(){
-	//everyOneSecond();
-	//Get question
 	var question = questions[questionCounter]["question"];
 	//assign div element to newDiv
 	var newDiv = $("<div>");
@@ -79,7 +76,7 @@ function everyOneSecond(){
 	$(".gamePage").append(newDiv);
 	createAnswers();
 }
-
+// ======= lets create answers =======
  function createAnswers(){
 	var answerLength = questions[questionCounter]["choices"].length;
 	for(var i = 0; i < answerLength;i++){
@@ -96,10 +93,11 @@ function everyOneSecond(){
 		//Add answers to DOM
 		$(".gamePage").append(newBtn);
 	}
-	//Prevents click event from being saved
+	// lets Prevent click event from being saved
 	$(document).off("click",".choices",checkAnswer);
 	$(document).on("click",".choices",checkAnswer);
 }
+// ======= lets check our answers =======
 
  function checkAnswer(){
 	 //Get users answer choice
@@ -111,50 +109,34 @@ function everyOneSecond(){
 	if(userAnswer === correctAnswer){
 		//Update rightCount
 		rightAnswer++;
-		//Clears out triv Section
+		//Clears out game page section
 		$(".gamePage").empty();
-
 		var newDiv = $("<div>");
-		//Give div class
 		newDiv.addClass("correctAnswer");
-		//adds CORRECT! text to div
 		newDiv.text(right);
-		//Add answer to DOM
 		$(".gamePage").append(newDiv);
-		
 		clearInterval(timer)
-		//Add 1 to question count to move to the next question
 		questionCounter++;
 		if(questionCounter <= 5){
-			//removes CORRECT! text and continues to create next question after 3 seconds
+//removes CORRECT! text and continues to create next question after 0.5 seconds
 			setTimeout(
 				function(){
 					$(".gamePage").empty();
 					createQuestions();
-					},500); //1500 milliseconds the time it take to go from one question to another
+					},500); //500 milliseconds the time it take to go from one question to another
 		}
 		else{
 			$(".gamePage").empty();
-			// var newImg = $('<img>');
-			// newImg.attr('src',correctImg);
-			// $('.trivSection').append(newImg);
-			//Create Div
 			var newDiv = $("<div>");
-			//Give div class
 			newDiv.addClass("correctAnswer");
-			//adds CORRECT! text to div
 			newDiv.text(right);
-			//Add answer to DOM
 			$(".gamePage").append(newDiv);
-			//Stops Time
-			//clearInterval(timer)
-			//Reset
 			setTimeout(gameOver, 500);
 		}
 	}
 	else{
 		wrongAnswer++;
-		//Clears out triv Section
+		//Clears out game page section
 		$(".gamePage").empty();
 		var newDiv = $("<div>");
 		//Give div class
@@ -163,11 +145,7 @@ function everyOneSecond(){
 		newDiv.text(wrong);
 		//Add answer to DOM
 		$(".gamePage").append(newDiv);
-		//Stops Time
-		//clearInterval(timer)
-		//Add 1 to question count to move to the next question
 		questionCounter++;
-		
 		if(questionCounter <= 5){
 			setTimeout(function(){
 			$(".gamePage").empty();
@@ -177,9 +155,6 @@ function everyOneSecond(){
 		else{
 			//Clears out triv Section
 			$(".gamePage").empty();
-		// 	var newImg = $('<img>');
-		// newImg.attr('src',correctImg);
-		// $('.trivSection').append(newImg);
 			var newDiv = $("<div>");
 			//Give div class
 			newDiv.addClass("incorrectAnswer");
@@ -187,19 +162,14 @@ function everyOneSecond(){
 			newDiv.text(wrong);
 			//Add answer to DOM
 			$(".gamePage").append(newDiv);
-			//Stops Time
-			//clearInterval(timer);
-			//Reset
 			setTimeout(gameOver, 500);
 		}
 	}
 }
-
-
+// ====== finsih the game =========
  function gameOver () {
 	//Remove everything in gamePage section
 	$(".gamePage").empty();
-
 	var scoreDiv = $("<div>");
 	scoreDiv.addClass("score");
 	scoreDiv.html("Correct: " + rightAnswer + "<br>" + "Wrong: " + wrongAnswer);
@@ -210,22 +180,20 @@ function everyOneSecond(){
 	newDiv.addClass("gameOver");
 	//add game over text
 	newDiv.text("Game Over! click Reset to play again?");
-	//Append game over text to DOM
 	$(".gamePage").append(newDiv);
-	//Create ResetButton
+
+	// ===== Create ResetButton =====
+
 	var newBtn = $("<button>");
 	//Give btn Class
 	newBtn.addClass("resetBtn");
-	//Give btn reset Text
+	//Give btn reset a name
 	newBtn.text("Reset");
-	//Append
 	$(".gamePage").append(newBtn);
-	
 	questionCounter = 1;
 	rightAnswer = 0;
 	wrongAnswer = 0;
-
-	//When reset button is clicked.......
+	//When reset button is clicked make game page empty
 	$(".resetBtn").on("click",function(){
 		$(".gamePage").empty()
 		//Starts game over
