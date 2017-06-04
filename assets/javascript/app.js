@@ -49,8 +49,8 @@ function initalizeGame(){
 	});
 }
 
-var counter = 5;
-var timerId = setInterval(everyOneSecond, 500);
+var counter = 50;
+//var timerId = setInterval(everyOneSecond, 500);
 function everyOneSecond(){
 	if (counter === 0) {
 		$(".timer").html("Remaining Time: " + counter);
@@ -59,7 +59,7 @@ function everyOneSecond(){
 
 	} else {
 
-	$(".timer").html(counter);
+	$(".timer").html("Remaining Time:"+counter);
 	counter--;
 	}
 
