@@ -5,42 +5,44 @@ var questionCounter = 1;// this counts the number of questions. it starts from o
 var timer = ""; //this will be the timer that will be shown for each question.
 // lets create an object so that we can access questions and answers pull our questions.
 var questions = {
-			1:{
-				question:"What ocean is on the West Coast of the United States?",
-				choices:["Atlantic","Southern","Arctic","Pacific"],
-				correct: "Pacific",
+	1:{
+		question:"What ocean is on the West Coast of the United States?",
+		choices:["Atlantic","Southern","Arctic","Pacific"],
+		correct: "Pacific",
 
-			   },
+	},
 
-			2:{
-				question:"What do we show loyalty to when we say the Pledge of Allegiance?",
-				choices:["The President","USA","State","Congress"],
-				correct:"USA",
-			},
-			3:{
-				question:"Before he was President, Eisenhower was a general. What war was he in?",
-				choices:["Vietnam War","Civil War","World War II","Spanish-American War"],
-				correct:"World War II",
-			},
+	2:{
+		question:"What do we show loyalty to when we say the Pledge of Allegiance?",
+		choices:["The President","USA","State","Congress"],
+		correct:"USA",
+	},
+	3:{
+		question:"Before he was President, Eisenhower was a general. What war was he in?",
+		choices:["Vietnam War","Civil War","World War II","Spanish-American War"],
+		correct:"World War II",
+	},
 
-			4:{
-				question:"We elect a President for how many years?",
-				choices:["Four","Eight","Six","Two"],
-				correct:"Four",
-			},
-			
-			5:{
-				question:"Name one problem that led to the Civil War.",
-				choices:["Sugar","Slavery","West ward expansion","Oil","none of the above"],
-				correct:"none of the above",
+	4:{
+		question:"We elect a President for how many years?",
+		choices:["Four","Eight","Six","Two"],
+		correct:"Four",
+	},
+	
+	5:{
+		question:"Name one problem that led to the Civil War.",
+		choices:["Sugar","Slavery","West ward expansion","Oil","none of the above"],
+		correct:"none of the above",
 		
-			},
+	},
 
-	};
-//lets start the game //When buttons is clicked the first screen will be cleared and the second will come
+};
+
+//lets start the game When buttons is clicked the first screen will be cleared and the second will come
+
 function initalizeGame(){
 	$(".startBtn").on("click",function(){
-	everyOneSecond();
+		everyOneSecond();
 		$(".gamePage").html("");// clears the second screen and make it ready
 		// this is the same as $(".gamePage").empty();
 		createQuestions();
@@ -48,23 +50,26 @@ function initalizeGame(){
 	});
 }
 
-var counter = 50;
+var counter = 50;// the number of seconds given for all the questions to be answerd
 //var timerId = setInterval(everyOneSecond, 500);
 function everyOneSecond(){
 	if (counter === 0) {
 		$(".timer").html("Remaining Time: " + counter);
-		$(".gamePage").html("ohh time is up " + "<br>" + "Correct: " + rightAnswer + "<br>" + "Wrong: " + wrongAnswer);
-	
+
+		$(".gamePage").html("ohh time is up. click the reset button below to play again  " + "<br>" + "Correct: " + rightAnswer + "<br>" + "Wrong: " + wrongAnswer + "<br>");
+		reset ();
+
 
 	} else {
 
-	$(".timer").html("Remaining Time:"+counter);
-	counter--;
+		$(".timer").html("Remaining Time:"+counter);
+		counter--;
 	}
 
 }
+
 // ======= lets create questions =======
- function createQuestions(){
+function createQuestions(){
 	var question = questions[questionCounter]["question"];
 	//assign div element to newDiv
 	var newDiv = $("<div>");
@@ -77,7 +82,7 @@ function everyOneSecond(){
 	createAnswers();
 }
 // ======= lets create answers =======
- function createAnswers(){
+function createAnswers(){
 	var answerLength = questions[questionCounter]["choices"].length;
 	for(var i = 0; i < answerLength;i++){
 		//get answers
@@ -99,12 +104,12 @@ function everyOneSecond(){
 }
 // ======= lets check our answers =======
 
- function checkAnswer(){
+function checkAnswer(){
 	 //Get users answer choice
-	var userAnswer = $(this).data("type");
-	var correctAnswer = questions[questionCounter]["correct"];
-	var right = questions[questionCounter]["right"];
-	var wrong = questions[questionCounter]["wrong"];
+	 var userAnswer = $(this).data("type");
+	 var correctAnswer = questions[questionCounter]["correct"];
+	 var right = questions[questionCounter]["right"];
+	 var wrong = questions[questionCounter]["wrong"];
 	//console.log(qACount);
 	if(userAnswer === correctAnswer){
 		//Update rightCount
@@ -119,23 +124,23 @@ function everyOneSecond(){
 		questionCounter++;
 		if(questionCounter <= 5){
 //removes CORRECT! text and continues to create next question after 0.5 seconds
-			setTimeout(
-				function(){
-					$(".gamePage").empty();
-					createQuestions();
+setTimeout(
+	function(){
+		$(".gamePage").empty();
+		createQuestions();
 					},500); //500 milliseconds the time it take to go from one question to another
-		}
-		else{
-			$(".gamePage").empty();
-			var newDiv = $("<div>");
-			newDiv.addClass("correctAnswer");
-			newDiv.text(right);
-			$(".gamePage").append(newDiv);
-			setTimeout(gameOver, 500);
-		}
-	}
-	else{
-		wrongAnswer++;
+}
+else{
+	$(".gamePage").empty();
+	var newDiv = $("<div>");
+	newDiv.addClass("correctAnswer");
+	newDiv.text(right);
+	$(".gamePage").append(newDiv);
+	setTimeout(gameOver, 500);
+}
+}
+else{
+	wrongAnswer++;
 		//Clears out game page section
 		$(".gamePage").empty();
 		var newDiv = $("<div>");
@@ -146,10 +151,11 @@ function everyOneSecond(){
 		//Add answer to DOM
 		$(".gamePage").append(newDiv);
 		questionCounter++;
+		
 		if(questionCounter <= 5){
 			setTimeout(function(){
-			$(".gamePage").empty();
-			createQuestions();
+				$(".gamePage").empty();
+				createQuestions();
 			},500);
 		}
 		else{
@@ -165,11 +171,12 @@ function everyOneSecond(){
 			setTimeout(gameOver, 500);
 		}
 	}
+
 }
 // ====== finsih the game =========
- function gameOver () {
+function gameOver () {
 	//Remove everything in gamePage section
-	$(".gamePage").empty();
+	//$(".gamePage").empty();
 	var scoreDiv = $("<div>");
 	scoreDiv.addClass("score");
 	scoreDiv.html("Correct: " + rightAnswer + "<br>" + "Wrong: " + wrongAnswer);
@@ -180,19 +187,20 @@ function everyOneSecond(){
 	newDiv.addClass("gameOver");
 	//add game over text
 	newDiv.text("Game Over! click Reset to play again?");
+	reset ();
 	$(".gamePage").append(newDiv);
-
+	questionCounter = 1;
+	rightAnswer = 0;
+	wrongAnswer = 0;
+}
 	// ===== Create ResetButton =====
-
-	var newBtn = $("<button>");
+	function reset () {
+		var newBtn = $("<button>");
 	//Give btn Class
 	newBtn.addClass("resetBtn");
 	//Give btn reset a name
 	newBtn.text("Reset");
 	$(".gamePage").append(newBtn);
-	questionCounter = 1;
-	rightAnswer = 0;
-	wrongAnswer = 0;
 	//When reset button is clicked make game page empty
 	$(".resetBtn").on("click",function(){
 		$(".gamePage").empty()
@@ -200,5 +208,6 @@ function everyOneSecond(){
 		createQuestions();
 	});
 }
+// }
 
 initalizeGame(); //===> starts the game.

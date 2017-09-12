@@ -24,8 +24,8 @@ h1{
 }
 .gamePage{
 	background-color: white;
-/*	background-image: url("../images/flag.jpg");*/
-	 background-size: 200px 200px;
+	/*	background-image: url("../images/flag.jpg");*/
+	background-size: 200px 200px;
 	width: 80%;
 	color: black;
 	padding: 20px;
@@ -38,6 +38,7 @@ h1{
 
 }
 .timer{
+	text-align: center;
 	font-size: 40px;
 	color: white;
 	margin-left: 100px;
