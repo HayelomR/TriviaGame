@@ -1,2 +1,3 @@
 # TriviaGame
-This is my first TriviaGame.  all questions are pulled from uscis with a modification. Go a head and test yourself and see if you can pass & become American.
+This is a trivia game built using javascript that lets users to tkae USCIS test.
+it contains five sample questions.
